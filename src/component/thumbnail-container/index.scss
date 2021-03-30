@@ -1,0 +1,33 @@
+.thumbnail-container {
+  .content {
+    display: flex;
+  }
+}
+
+.thumbnail-container-recent {
+  .content {
+    flex-wrap: wrap;
+    .thumbnail {
+      width: calc((98% / 2) - 0.1px);
+      margin-right: 2%;
+      a {
+        .desc {
+          margin-top: 10px;
+        }
+      }
+    }
+    .thumbnail-reverse {
+      a {
+        display: flex;
+        flex-direction: column-reverse;
+        .desc {
+          margin-bottom: 10px;
+          margin-top: 0;
+        }
+      }
+    }
+    .thumbnail:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+}
