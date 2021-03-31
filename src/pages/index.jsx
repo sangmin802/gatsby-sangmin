@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 import Layout from "../layout/layout";
 import ThumbnailContainer from "../component/thumbnail-container/index";
 
@@ -10,6 +10,7 @@ const IndexPage = ({ data }) => {
   } = data;
   return (
     <Layout>
+      <Link to="/post">POST</Link>
       <ThumbnailContainer edges={edges} title="Recent Post" type="-recent" />
     </Layout>
   );

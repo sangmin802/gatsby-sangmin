@@ -5,6 +5,7 @@ module.exports = {
   plugins: [
     "gatsby-plugin-sass",
     "gatsby-plugin-sitemap",
+    "gatsby-plugin-lodash",
     "gatsby-transformer-remark",
     {
       resolve: "gatsby-source-filesystem",
