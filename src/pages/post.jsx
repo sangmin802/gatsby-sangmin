@@ -12,7 +12,7 @@ const Post = ({ data }) => {
   const { state: tag, setNavigation: setTag } = useNavigation();
   const { state: category, setNavigation: setCategory } = useNavigation(setTag);
   const categories = useMemo(() => {
-    return _.uniq(
+    const arr = _.uniq(
       allMDFile.map(
         ({
           node: {
@@ -21,20 +21,22 @@ const Post = ({ data }) => {
         }) => category
       )
     );
+    arr.unshift("All");
+    return arr;
   }, [allMDFile]);
   const tags = useMemo(() => {
     const arr = _.compact(
       _.uniq(
         allMDFile.map(({ node: { frontmatter } }) =>
-          frontmatter.category === categories[category] ? frontmatter.tag : null
+          frontmatter.category === category ? frontmatter.tag : null
         )
       )
     );
-    return arr.length !== 0 ? arr : null;
-  }, [allMDFile, categories, category]);
-  const targetCategory = categories ? categories[category] : null;
-  const targetTag = tags ? tags[tag] : null;
-  const { refinedPost } = usePost(targetCategory, targetTag, allMDFile);
+    arr.length !== 0 ? arr.unshift("All") : arr;
+    return arr;
+  }, [allMDFile, category]);
+
+  const { refinedPost } = usePost(category, tag, allMDFile);
 
   return (
     <Layout>
@@ -43,7 +45,7 @@ const Post = ({ data }) => {
         selected={category}
         setNavigation={setCategory}
       />
-      {tags && (
+      {tags.length !== 0 && (
         <NavigationContainer
           navigation={tags}
           selected={tag}

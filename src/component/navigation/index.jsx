@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo } from "react";
 
-const Navigation = ({ navigation, index, setNavigation, selected }) => {
+const Navigation = ({ navigation, setNavigation, selected }) => {
   const selectNavigation = useCallback(() => {
-    setNavigation(index);
-  }, [index, setNavigation]);
+    setNavigation(navigation);
+  }, [navigation, setNavigation]);
 
   const style = useMemo(() => {
-    return index === selected ? { fontWeight: "bold" } : {};
-  }, [index, selected]);
+    return navigation === selected ? { fontWeight: "bold" } : {};
+  }, [navigation, selected]);
 
   return (
     <div style={style} onClick={selectNavigation}>
