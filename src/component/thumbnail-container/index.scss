@@ -1,12 +1,14 @@
 .thumbnail-container {
   .content {
     display: flex;
+    flex-direction: column;
   }
 }
 
 .thumbnail-container-recent {
   .content {
     flex-wrap: wrap;
+    flex-direction: row;
     .thumbnail {
       width: calc((98% / 2) - 0.1px);
       margin-right: 2%;

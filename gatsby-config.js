@@ -6,7 +6,6 @@ module.exports = {
     "gatsby-plugin-sass",
     "gatsby-plugin-sitemap",
     "gatsby-plugin-lodash",
-    "gatsby-transformer-remark",
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -14,6 +13,12 @@ module.exports = {
         path: `${__dirname}/post/`,
       },
       __key: "pages",
+    },
+    {
+      resolve: "gatsby-transformer-remark",
+      options: {
+        plugins: ["gatsby-remark-prismjs"],
+      },
     },
   ],
 };

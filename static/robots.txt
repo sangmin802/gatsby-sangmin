@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://sangmin802.github.io/sitemap.xml

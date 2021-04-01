@@ -6,11 +6,12 @@ const UseNavigation = (setTag = null) => {
   const setNavigation = useCallback(
     nav => {
       setState(nav);
-      if (setTag) setTag("All");
+      if (setTag) {
+        setTag("All");
+      }
     },
     [setState, setTag]
   );
-
   return { state, setNavigation };
 };
 

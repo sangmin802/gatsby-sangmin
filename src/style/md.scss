@@ -1,0 +1,35 @@
+.markdown-body {
+  * {
+    color: inherit;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 1em;
+  }
+  p,
+  blockquote,
+  pre {
+    margin-bottom: 0.8em;
+  }
+  :not(pre) > code[class*="language-"] {
+    background: #9758e0e7;
+    color: #fff;
+  }
+  pre[class*="language-"] {
+    background: #2d2d2d;
+    border-radius: 0.3em;
+  }
+  blockquote {
+    width: fit-content;
+    padding: 0.3rem;
+    margin-left: 1rem;
+    border-left: 7px solid rgb(212, 212, 212);
+    * {
+      margin-bottom: 0;
+    }
+  }
+}

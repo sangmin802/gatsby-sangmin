@@ -1,5 +1,7 @@
 import React from "react";
+import "typeface-noto-sans";
 import "../style/global.scss";
+import "../style/md.scss";
 
 const Layout = ({ children }) => {
   return (

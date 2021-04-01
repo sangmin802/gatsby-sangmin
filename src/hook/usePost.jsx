@@ -1,24 +1,25 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import _ from "../utils/scrollPostProps";
 
-const POST_SIZE = 10;
+const UsePost = post => {
+  const [state, setState] = useState(post.slice(0, _.size));
 
-const UsePost = (c, t, post) => {
-  const refinedPost = useMemo(() => {
-    if (c === "All") return post;
-    return post.reduce((prev, next) => {
-      const {
-        node: {
-          frontmatter: { category, tag },
-        },
-      } = next;
-      // 태그가 All일 경우, 동일한 카테고리만
-      if (t === "All" && category === c) prev.push(next);
-      // 태그가 All이 아닐 경우, 둘다 동일한 경우만
-      if (category === c && tag === t) prev.push(next);
-      return prev;
-    }, []);
-  }, [c, t, post]);
-  return { refinedPost };
+  const setPost = useCallback(
+    newPost => {
+      setState(newPost);
+    },
+    [setState]
+  );
+
+  useEffect(() => {
+    setPost(post.slice(_.count, _.size));
+
+    return () => {
+      _.count = 0;
+    };
+  }, [post]);
+
+  return { state, setPost };
 };
 
 export default UsePost;

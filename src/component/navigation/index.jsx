@@ -16,4 +16,9 @@ const Navigation = ({ navigation, setNavigation, selected }) => {
   );
 };
 
-export default Navigation;
+export default React.memo(Navigation, (left, right) => {
+  const a = left.navigation == left.selected;
+  const b = right.navigation == right.selected;
+  if (a !== b) return false;
+  return true;
+});

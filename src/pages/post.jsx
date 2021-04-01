@@ -2,10 +2,13 @@ import React, { useMemo } from "react";
 import _ from "lodash";
 import { graphql } from "gatsby";
 import useNavigation from "../hook/useNavigation";
+import useRefinedPost from "../hook/useRefinedPost";
+import useIntersectionObserver from "../hook/useIntersectionObserver";
 import usePost from "../hook/usePost";
 import Layout from "../layout/layout";
 import NavigationContainer from "../component/navigation-container/index";
 import ThumbnailContainer from "../component/thumbnail-container/index";
+import Observer from "../component/observer/index";
 
 const Post = ({ data }) => {
   const allMDFile = data.allMarkdownRemark.edges;
@@ -35,8 +38,9 @@ const Post = ({ data }) => {
     arr.length !== 0 ? arr.unshift("All") : arr;
     return arr;
   }, [allMDFile, category]);
-
-  const { refinedPost } = usePost(category, tag, allMDFile);
+  const { refinedPost } = useRefinedPost(category, tag, allMDFile);
+  const { state: post, setPost } = usePost(refinedPost);
+  useIntersectionObserver(refinedPost, setPost);
 
   return (
     <Layout>
@@ -52,7 +56,8 @@ const Post = ({ data }) => {
           setNavigation={setTag}
         />
       )}
-      <ThumbnailContainer edges={refinedPost} />
+      <ThumbnailContainer edges={post} />
+      <Observer />
     </Layout>
   );
 };
