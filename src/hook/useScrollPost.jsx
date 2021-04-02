@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import _ from "../utils/scrollPostProps";
+import IO from "../utils/intersectionObserver";
 
-const UseIntersectionObserver = (post, setPost) => {
-  useEffect(() => {
-    const callback = entries => {
+export function useScrollPost(post, setPost) {
+  const callback = useCallback(
+    entries => {
       entries.forEach(entry => {
         if (_.count * _.size >= post.length) return;
         if (entry.intersectionRatio > 0) {
@@ -11,16 +12,17 @@ const UseIntersectionObserver = (post, setPost) => {
           setPost(post.slice(0, (_.count + 1) * _.size));
         }
       });
-    };
-    const observer = new IntersectionObserver(callback);
+    },
+    [post, setPost]
+  );
+
+  useEffect(() => {
     const target = document.querySelector(".observer");
-    observer.observe(target);
+    const observer = IO.connectIO(target, callback);
 
     return () => {
-      observer.unobserve(target);
+      IO.disconnectIO(observer, target);
       _.count = 0;
     };
-  }, [post, setPost]);
-};
-
-export default UseIntersectionObserver;
+  }, [callback]);
+}

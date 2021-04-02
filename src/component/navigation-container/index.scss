@@ -1,0 +1,15 @@
+.horizontal-navigation {
+  width: 100%;
+  overflow-x: hidden;
+  .inner-navigation {
+    display: flex;
+    width: max-content;
+    > div {
+      margin: 0 20px;
+    }
+    > div:first-child,
+    > div:last-child {
+      margin: 0;
+    }
+  }
+}

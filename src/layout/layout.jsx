@@ -1,15 +1,21 @@
 import React from "react";
-import "typeface-noto-sans";
+import { Link } from "gatsby";
 import "../style/global.scss";
-import "../style/md.scss";
+import Head from "../component/head/index";
+import Search from "../component/search/index";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, title }) => {
   return (
-    <>
-      <header>header</header>
+    <div className="app">
+      <Head title={title} />
+      <header>
+        <Link to="/">HOME</Link>
+        <Link to="/post">POST</Link>
+        <Search />
+      </header>
       <main style={{ margin: "0 auto", maxWidth: "39rem" }}>{children}</main>
       <footer>footer</footer>
-    </>
+    </div>
   );
 };
 

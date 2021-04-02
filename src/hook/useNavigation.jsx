@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-const UseNavigation = (setTag = null) => {
+export function useNavigation(setTag = null) {
   const [state, setState] = useState("All");
 
   const setNavigation = useCallback(
@@ -13,6 +13,4 @@ const UseNavigation = (setTag = null) => {
     [setState, setTag]
   );
   return { state, setNavigation };
-};
-
-export default UseNavigation;
+}

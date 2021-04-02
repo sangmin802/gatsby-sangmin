@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql, Link } from "gatsby";
+import { graphql } from "gatsby";
 import Layout from "../layout/layout";
 import ThumbnailContainer from "../component/thumbnail-container/index";
 
@@ -7,16 +7,18 @@ import ThumbnailContainer from "../component/thumbnail-container/index";
 const IndexPage = ({ data }) => {
   const {
     allMarkdownRemark: { edges },
+    site: {
+      siteMetadata: { title },
+    },
   } = data;
   return (
-    <Layout>
-      <Link to="/post">POST</Link>
+    <Layout title={title}>
       <ThumbnailContainer edges={edges} title="Recent Post" type="-recent" />
     </Layout>
   );
 };
 
-export default IndexPage;
+export default React.memo(IndexPage, () => true);
 
 export const query = graphql`
   query {
@@ -40,6 +42,11 @@ export const query = graphql`
           }
           excerpt(pruneLength: 200, truncate: true)
         }
+      }
+    }
+    site {
+      siteMetadata {
+        title
       }
     }
   }

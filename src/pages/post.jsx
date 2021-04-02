@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import _ from "lodash";
 import { graphql } from "gatsby";
-import useNavigation from "../hook/useNavigation";
-import useRefinedPost from "../hook/useRefinedPost";
-import useIntersectionObserver from "../hook/useIntersectionObserver";
-import usePost from "../hook/usePost";
+import { useNavigation } from "../hook/useNavigation";
+import { useRefinedPost } from "../hook/useRefinedPost";
+import { useScrollPost } from "../hook/useScrollPost";
+import { usePost } from "../hook/usePost";
 import Layout from "../layout/layout";
 import NavigationContainer from "../component/navigation-container/index";
 import ThumbnailContainer from "../component/thumbnail-container/index";
@@ -12,6 +12,7 @@ import Observer from "../component/observer/index";
 
 const Post = ({ data }) => {
   const allMDFile = data.allMarkdownRemark.edges;
+  const title = data.site.siteMetadata.title;
   const { state: tag, setNavigation: setTag } = useNavigation();
   const { state: category, setNavigation: setCategory } = useNavigation(setTag);
   const categories = useMemo(() => {
@@ -40,10 +41,10 @@ const Post = ({ data }) => {
   }, [allMDFile, category]);
   const { refinedPost } = useRefinedPost(category, tag, allMDFile);
   const { state: post, setPost } = usePost(refinedPost);
-  useIntersectionObserver(refinedPost, setPost);
+  useScrollPost(refinedPost, setPost);
 
   return (
-    <Layout>
+    <Layout title={`${title} - Post`}>
       <NavigationContainer
         navigation={categories}
         selected={category}
@@ -56,13 +57,16 @@ const Post = ({ data }) => {
           setNavigation={setTag}
         />
       )}
-      <ThumbnailContainer edges={post} />
+      <ThumbnailContainer
+        edges={post}
+        title={`${category}${tag === "All" ? "" : ` - ${tag}`}`}
+      />
       <Observer />
     </Layout>
   );
 };
 
-export default Post;
+export default React.memo(Post, () => true);
 
 export const query = graphql`
   query {
@@ -83,6 +87,11 @@ export const query = graphql`
           }
           excerpt(pruneLength: 200, truncate: true)
         }
+      }
+    }
+    site {
+      siteMetadata {
+        title
       }
     }
   }

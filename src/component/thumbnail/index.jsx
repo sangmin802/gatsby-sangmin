@@ -14,11 +14,7 @@ const Thumbnail = ({ node }) => {
         <h3 className="title">{frontmatter.title}</h3>
         <div className="desc">
           {frontmatter.coverImage && (
-            <img
-              className="imgWidth"
-              src={frontmatter.coverImage}
-              alt={frontmatter.coverImage}
-            />
+            <img src={frontmatter.coverImage} alt={frontmatter.coverImage} />
           )}
           {!frontmatter.coverImage && <p>{excerpt}</p>}
         </div>

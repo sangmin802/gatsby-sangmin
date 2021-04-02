@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-const useRefinedPost = (c, t, post) => {
+export function useRefinedPost(c, t, post) {
   const refinedC = useMemo(() => {
     if (c === "All") return post;
     return post.reduce((prev, next) => {
@@ -28,6 +28,4 @@ const useRefinedPost = (c, t, post) => {
   }, [t, refinedC]);
 
   return { refinedPost };
-};
-
-export default useRefinedPost;
+}

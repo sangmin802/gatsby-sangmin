@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import _ from "../utils/scrollPostProps";
 
-const UsePost = post => {
+export function usePost(post) {
   const [state, setState] = useState(post.slice(0, _.size));
 
   const setPost = useCallback(
@@ -20,6 +20,4 @@ const UsePost = post => {
   }, [post]);
 
   return { state, setPost };
-};
-
-export default UsePost;
+}
