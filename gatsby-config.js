@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: "gatsby-sangmin",
+    siteUrl: "https://github.com/sangmin802/gatsby-sangmin",
   },
   plugins: [
     "gatsby-plugin-sass",
