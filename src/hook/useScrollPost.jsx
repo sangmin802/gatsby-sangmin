@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import _ from "../utils/scrollPostProps";
-import IO from "../utils/intersectionObserver";
+import IO from "../utils/event-manager/intersectionObserver";
 
 export function useScrollPost(post, setPost) {
   const callback = useCallback(

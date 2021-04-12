@@ -1,31 +1,22 @@
 import { useMemo } from "react";
 
-export function useRefinedPost(c, t, post) {
+export function useRefinedPost(selectedC, selectedT, post) {
   const refinedC = useMemo(() => {
-    if (c === "All") return post;
-    return post.reduce((prev, next) => {
-      const {
-        node: {
-          frontmatter: { category },
-        },
-      } = next;
-      if (category === c) prev.push(next);
-      return prev;
-    }, []);
-  }, [c, post]);
+    return reducePosts(post, "category", selectedC);
+  }, [selectedC, post]);
 
   const refinedPost = useMemo(() => {
-    return refinedC.reduce((prev, next) => {
-      if (t === "All") return refinedC;
-      const {
-        node: {
-          frontmatter: { tag },
-        },
-      } = next;
-      if (tag === t) prev.push(next);
-      return prev;
-    }, []);
-  }, [t, refinedC]);
+    if (!selectedT) return refinedC;
+    return reducePosts(refinedC, "tag", selectedT);
+  }, [selectedT, refinedC]);
 
   return { refinedPost };
+}
+
+function reducePosts(post, type, selectType) {
+  return post.reduce((prev, next) => {
+    const prop = next.node.frontmatter[type];
+    if (prop === selectType) prev.push(next);
+    return prev;
+  }, []);
 }

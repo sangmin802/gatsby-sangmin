@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo } from "react";
 
-const Navigation = ({ navigation, setNavigation, selected }) => {
+const Navigation = ({ navigation, index, setNavigation, selected }) => {
   const selectNavigation = useCallback(() => {
-    setNavigation(navigation);
-  }, [navigation, setNavigation]);
+    setNavigation(index);
+  }, [index, setNavigation]);
 
   const style = useMemo(() => {
-    return navigation === selected ? { fontWeight: "bold" } : {};
+    return index === selected ? { fontWeight: "bold" } : {};
   }, [navigation, selected]);
 
   return (
@@ -17,8 +17,8 @@ const Navigation = ({ navigation, setNavigation, selected }) => {
 };
 
 export default React.memo(Navigation, (left, right) => {
-  const a = left.navigation == left.selected;
-  const b = right.navigation == right.selected;
+  const a = left.index == left.selected;
+  const b = right.index == right.selected;
   if (a !== b) return false;
   return true;
 });

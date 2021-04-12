@@ -6,10 +6,11 @@ const NavigationContainer = ({ navigation, setNavigation, selected }) => {
   return (
     <nav className="horizontal-navigation">
       <div className="inner-navigation">
-        {navigation.map(NAV => (
+        {navigation.map((name, index) => (
           <Navigation
-            key={NAV}
-            navigation={NAV}
+            key={name}
+            navigation={name}
+            index={index}
             setNavigation={setNavigation}
             selected={selected}
           />

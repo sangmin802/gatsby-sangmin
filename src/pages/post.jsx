@@ -13,8 +13,8 @@ import Observer from "../component/observer/index";
 const Post = ({ data }) => {
   const allMDFile = data.allMarkdownRemark.edges;
   const title = data.site.siteMetadata.title;
-  const { state: tag, setNavigation: setTag } = useNavigation();
-  const { state: category, setNavigation: setCategory } = useNavigation(setTag);
+  const { state: category, setNavigation: setCategory } = useNavigation();
+  const { state: tag, setNavigation: setTag } = useNavigation(category);
   const categories = useMemo(() => {
     const arr = _.uniq(
       allMDFile.map(
@@ -25,21 +25,21 @@ const Post = ({ data }) => {
         }) => category
       )
     );
-    arr.unshift("All");
     return arr;
   }, [allMDFile]);
+  const selectedC = categories[category];
   const tags = useMemo(() => {
     const arr = _.compact(
       _.uniq(
         allMDFile.map(({ node: { frontmatter } }) =>
-          frontmatter.category === category ? frontmatter.tag : null
+          frontmatter.category === selectedC ? frontmatter.tag : null
         )
       )
     );
-    arr.length !== 0 ? arr.unshift("All") : arr;
     return arr;
   }, [allMDFile, category]);
-  const { refinedPost } = useRefinedPost(category, tag, allMDFile);
+  const selectedT = tags[tag];
+  const { refinedPost } = useRefinedPost(selectedC, selectedT, allMDFile);
   const { state: post, setPost } = usePost(refinedPost);
   useScrollPost(refinedPost, setPost);
 
@@ -59,7 +59,7 @@ const Post = ({ data }) => {
       )}
       <ThumbnailContainer
         edges={post}
-        title={`${category}${tag === "All" ? "" : ` - ${tag}`}`}
+        title={`${selectedC}${selectedT ? ` - ${selectedT}` : ""}`}
       />
       <Observer />
     </Layout>

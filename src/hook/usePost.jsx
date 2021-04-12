@@ -12,7 +12,7 @@ export function usePost(post) {
   );
 
   useEffect(() => {
-    setPost(post.slice(_.count, _.size));
+    setPost(post.slice(0, _.size));
 
     return () => {
       _.count = 0;

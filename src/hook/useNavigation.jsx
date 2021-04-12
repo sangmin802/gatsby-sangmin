@@ -1,16 +1,17 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-export function useNavigation(setTag = null) {
-  const [state, setState] = useState("All");
+export function useNavigation(resetKey = null) {
+  const [state, setState] = useState(0);
 
   const setNavigation = useCallback(
     nav => {
       setState(nav);
-      if (setTag) {
-        setTag("All");
-      }
     },
-    [setState, setTag]
+    [setState]
   );
+
+  useEffect(() => {
+    return () => (resetKey ? setState(0) : null);
+  }, [resetKey, setState]);
   return { state, setNavigation };
 }
