@@ -1,0 +1,10 @@
+.navigation-wrap {
+  height: 44px;
+  .fixed-navigation {
+    position: absolute;
+  }
+  .fixed {
+    position: fixed;
+    top: 0;
+  }
+}
