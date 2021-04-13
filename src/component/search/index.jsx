@@ -1,8 +1,9 @@
 import { lowerCase } from "lodash";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useSearch } from "../../hook/useSearch";
 import { SearchItem } from "./searchItem";
 import { StaticQuery, graphql } from "gatsby";
+import { debounce } from "../../utils/event-manager/debounce";
 import "./index.scss";
 
 const Search = () => {
@@ -11,7 +12,6 @@ const Search = () => {
       query={query}
       render={data => {
         const [search, changeSearch] = useSearch();
-
         const filterdData = data.allMarkdownRemark.edges.filter(
           ({
             node: {
@@ -20,20 +20,28 @@ const Search = () => {
             node,
           }) => {
             if (
-              lowerCase(title).replace(/ /g, "").includes(lowerCase(search))
+              lowerCase(title)
+                .replace(/ /g, "")
+                .includes(lowerCase(search).replace(/ /g, ""))
             ) {
               return node;
             }
           }
         );
 
+        // search debouncing
+        const debounceAct = useMemo(() => debounce(), []);
         const onChange = useCallback(
           e => {
-            changeSearch(e.target.value);
+            const callback = () => {
+              changeSearch(e.target.value);
+            };
+            debounceAct(callback, 300);
           },
-          [changeSearch]
+          [changeSearch, debounceAct]
         );
 
+        // prevent click event flow
         const onClick = useCallback(e => {
           e.stopPropagation();
         }, []);
@@ -43,12 +51,11 @@ const Search = () => {
             <input
               type="text"
               className="search"
-              value={search}
               onChange={onChange}
               onClick={onClick}
               placeholder="search post..."
             />
-            {filterdData.length !== 0 && search !== "" && (
+            {filterdData.length !== 0 && search && (
               <div className="searchList">
                 <div className="searchArea">
                   {filterdData.map(({ node }, index) => {

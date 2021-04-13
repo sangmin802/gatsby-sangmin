@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 
 export function useSearch() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(null);
 
   const changeSearch = useCallback(value => {
     setSearch(value);
@@ -9,9 +9,9 @@ export function useSearch() {
 
   useEffect(() => {
     const windowEvent = function () {
-      setSearch("");
+      setSearch(null);
     };
-    setSearch("");
+    setSearch(null);
 
     window.addEventListener("click", windowEvent);
 
