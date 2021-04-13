@@ -10,9 +10,9 @@ const Navigation = ({ name, index, setNavigation, selected, type }) => {
   }, [index, selected]);
 
   return (
-    <div style={style} onClick={selectNavigation}>
+    <nav style={style} onClick={selectNavigation}>
       {name}
-    </div>
+    </nav>
   );
 };
 

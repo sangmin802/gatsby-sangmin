@@ -1,7 +1,7 @@
 import React from "react";
 
 const Observer = () => {
-  return <div className="observer"></div>;
+  return <article className="observer"></article>;
 };
 
 export default Observer;

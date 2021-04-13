@@ -4,11 +4,11 @@
   .inner-navigation {
     display: flex;
     width: max-content;
-    > div {
+    > nav {
       margin: 0 20px;
     }
-    > div:first-child,
-    > div:last-child {
+    > nav:first-child,
+    > nav:last-child {
       margin: 0;
     }
   }
