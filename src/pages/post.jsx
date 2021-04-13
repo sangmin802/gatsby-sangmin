@@ -13,8 +13,9 @@ import Observer from "../component/observer/index";
 const Post = ({ data }) => {
   const allMDFile = data.allMarkdownRemark.edges;
   const title = data.site.siteMetadata.title;
-  const { state: category, setNavigation: setCategory } = useNavigation();
-  const { state: tag, setNavigation: setTag } = useNavigation(category);
+  const { navigation, setNavigation } = useNavigation();
+  const { category, tag } = navigation;
+
   const categories = useMemo(() => {
     const arr = _.uniq(
       allMDFile.map(
@@ -46,15 +47,17 @@ const Post = ({ data }) => {
   return (
     <Layout title={`${title} - Post`}>
       <NavigationContainer
-        navigation={categories}
+        nameArr={categories}
         selected={category}
-        setNavigation={setCategory}
+        type="category"
+        setNavigation={setNavigation}
       />
       {tags.length !== 0 && (
         <NavigationContainer
-          navigation={tags}
+          nameArr={tags}
           selected={tag}
-          setNavigation={setTag}
+          type="tag"
+          setNavigation={setNavigation}
         />
       )}
       <ThumbnailContainer
