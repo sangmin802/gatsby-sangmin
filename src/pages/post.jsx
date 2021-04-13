@@ -1,9 +1,11 @@
 import React, { useMemo } from "react";
+import "../style/post.scss";
 import _ from "lodash";
 import { graphql } from "gatsby";
 import { useNavigation } from "../hook/useNavigation";
 import { useRefinedPost } from "../hook/useRefinedPost";
 import { useScrollPost } from "../hook/useScrollPost";
+import { useFixNavigation } from "../hook/useFixNavigation";
 import { usePost } from "../hook/usePost";
 import Layout from "../layout/layout";
 import NavigationContainer from "../component/navigation-container/index";
@@ -43,23 +45,28 @@ const Post = ({ data }) => {
   const { refinedPost } = useRefinedPost(selectedC, selectedT, allMDFile);
   const { state: post, setPost } = usePost(refinedPost);
   useScrollPost(refinedPost, setPost);
+  useFixNavigation();
 
   return (
     <Layout title={`${title} - Post`}>
-      <NavigationContainer
-        nameArr={categories}
-        selected={category}
-        type="category"
-        setNavigation={setNavigation}
-      />
-      {tags.length !== 0 && (
-        <NavigationContainer
-          nameArr={tags}
-          selected={tag}
-          type="tag"
-          setNavigation={setNavigation}
-        />
-      )}
+      <section className="navigation-wrap">
+        <nav className="fixed-navigation">
+          <NavigationContainer
+            nameArr={categories}
+            selected={category}
+            type="category"
+            setNavigation={setNavigation}
+          />
+          {tags.length !== 0 && (
+            <NavigationContainer
+              nameArr={tags}
+              selected={tag}
+              type="tag"
+              setNavigation={setNavigation}
+            />
+          )}
+        </nav>
+      </section>
       <ThumbnailContainer
         edges={post}
         title={`${selectedC}${selectedT ? ` - ${selectedT}` : ""}`}

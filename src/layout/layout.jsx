@@ -13,7 +13,12 @@ const Layout = ({ children, title }) => {
         <Link to="/post">POST</Link>
         <Search />
       </header>
-      <main style={{ margin: "0 auto", maxWidth: "39rem" }}>{children}</main>
+      <main
+        className="main-content"
+        style={{ margin: "0 auto", maxWidth: "39rem" }}
+      >
+        {children}
+      </main>
       <footer>footer</footer>
     </div>
   );
