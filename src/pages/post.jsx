@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect } from "react";
+import React, { useMemo, useCallback } from "react";
 import "../style/post.scss";
 import _ from "lodash";
 import scrollProps from "../utils/scrollPostProps";
@@ -7,6 +7,7 @@ import { useNavigation } from "../hook/useNavigation";
 import { useRefinedPost } from "../hook/useRefinedPost";
 import { useIntersectionObserver } from "../hook/useIntersectionObserver";
 import { usePost } from "../hook/usePost";
+import { useSlider } from "../hook/useSlider";
 import Layout from "../layout/layout";
 import NavigationContainer from "../component/navigation-container/index";
 import ThumbnailContainer from "../component/thumbnail-container/index";
@@ -68,41 +69,26 @@ const Post = ({ data }) => {
   );
   useIntersectionObserver(infinitScrollCallback, ".observer");
 
-  // fix navigation bar intersectionObserver
-  const fixNavigationCallback = useCallback(entries => {
-    const target = document.querySelector(".fixed-navigation");
-    entries.forEach(entry => {
-      if (entry.intersectionRatio === 0) {
-        target.classList.add("fixed");
-      } else {
-        target.classList.remove("fixed");
-      }
-    });
-  }, []);
-  useIntersectionObserver(fixNavigationCallback, ".navigation-wrap", {
-    rootMargin: "-44px",
-  });
+  // useSlider(navigation);
 
   return (
     <Layout title={`${title} - Post`}>
-      <section className="navigation-wrap">
-        <nav className="fixed-navigation">
+      <nav className="fixed-navigation">
+        <NavigationContainer
+          nameArr={categories}
+          selected={category}
+          type="category"
+          setNavigation={setNavigation}
+        />
+        {tags.length !== 0 && (
           <NavigationContainer
-            nameArr={categories}
-            selected={category}
-            type="category"
+            nameArr={tags}
+            selected={tag}
+            type="tag"
             setNavigation={setNavigation}
           />
-          {tags.length !== 0 && (
-            <NavigationContainer
-              nameArr={tags}
-              selected={tag}
-              type="tag"
-              setNavigation={setNavigation}
-            />
-          )}
-        </nav>
-      </section>
+        )}
+      </nav>
       <ThumbnailContainer
         edges={post}
         title={`${selectedC}${selectedT ? ` - ${selectedT}` : ""}`}

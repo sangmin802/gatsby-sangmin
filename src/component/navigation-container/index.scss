@@ -1,15 +1,23 @@
-.horizontal-navigation {
-  width: 100%;
-  overflow-x: hidden;
-  .inner-navigation {
-    display: flex;
-    width: max-content;
-    > nav {
-      margin: 0 20px;
-    }
-    > nav:first-child,
-    > nav:last-child {
-      margin: 0;
+.fixed-navigation {
+  position: sticky;
+  top: 0;
+  .navigation {
+    width: 100%;
+    overflow-x: hidden;
+    .inner-navigation {
+      display: flex;
+      width: max-content;
+      transition: 0.3s;
+      > nav {
+        margin-right: 20px;
+        flex-shrink: 0;
+        padding: 4px 8px;
+        font-weight: bold;
+        color: #888;
+      }
+      > nav:last-child {
+        margin: 0;
+      }
     }
   }
 }
