@@ -4,7 +4,7 @@ import "./index.scss";
 
 const NavigationContainer = ({ nameArr, setNavigation, selected, type }) => {
   return (
-    <nav className="horizontal-navigation">
+    <article className="navigation">
       <div className="inner-navigation">
         {nameArr.map((name, index) => (
           <Navigation
@@ -17,7 +17,7 @@ const NavigationContainer = ({ nameArr, setNavigation, selected, type }) => {
           />
         ))}
       </div>
-    </nav>
+    </article>
   );
 };
 

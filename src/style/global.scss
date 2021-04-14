@@ -7,6 +7,13 @@
   font-family: "Noto Sans";
   color: #000000;
 }
-img {
-  max-width: 100%;
+
+body {
+  scrollbar-width: none;
+  img {
+    max-width: 100%;
+  }
+}
+body::-webkit-scrollbar {
+  overflow: hidden;
 }
