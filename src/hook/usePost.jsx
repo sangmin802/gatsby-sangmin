@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import _ from "../utils/scrollPostProps";
 
-export function usePost(post) {
-  const [state, setState] = useState(post.slice(0, _.size));
+export function usePost(refinedPost) {
+  const [state, setState] = useState(refinedPost.slice(0, _.size));
 
   const setPost = useCallback(
     newPost => {
@@ -12,12 +12,12 @@ export function usePost(post) {
   );
 
   useEffect(() => {
-    setPost(post.slice(0, _.size));
+    setPost(refinedPost.slice(0, _.size));
 
     return () => {
       _.count = 0;
     };
-  }, [post]);
+  }, [refinedPost]);
 
   return { state, setPost };
 }
