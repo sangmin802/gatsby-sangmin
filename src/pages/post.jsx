@@ -12,7 +12,6 @@ import ThumbnailContainer from "../component/thumbnail-container/index";
 import Observer from "../component/observer/index";
 
 const Post = ({ data }) => {
-  return <p>Post 페이지</p>;
   // Not rendering in server environment
   if (!isBrowser()) return null;
 
