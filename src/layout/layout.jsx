@@ -10,7 +10,7 @@ const Layout = ({ children, title }) => {
       <Head title={title} />
       <header>
         <Link to="/">HOME</Link>
-        <Link to="/post">POST</Link>
+        <Link to="/post/">POST</Link>
         <Search />
       </header>
       <main
