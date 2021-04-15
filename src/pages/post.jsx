@@ -1,5 +1,4 @@
 import React, { useMemo, useCallback } from "react";
-import "../style/post.scss";
 import _ from "lodash";
 import scrollProps from "../utils/scrollPostProps";
 import { graphql } from "gatsby";
@@ -7,13 +6,16 @@ import { useNavigation } from "../hook/useNavigation";
 import { useRefinedPost } from "../hook/useRefinedPost";
 import { useIntersectionObserver } from "../hook/useIntersectionObserver";
 import { usePost } from "../hook/usePost";
-import { useSlider } from "../hook/useSlider";
+import { isBrowser } from "../utils/isBrowser";
 import Layout from "../layout/layout";
 import NavigationContainer from "../component/navigation-container/index";
 import ThumbnailContainer from "../component/thumbnail-container/index";
 import Observer from "../component/observer/index";
 
 const Post = ({ data }) => {
+  // Not rendering in server environment
+  if (!isBrowser()) return null;
+
   const allMDFile = data.allMarkdownRemark.edges;
   const title = data.site.siteMetadata.title;
   const { navigation, setNavigation } = useNavigation();
@@ -68,8 +70,6 @@ const Post = ({ data }) => {
     [refinedPost, setPost]
   );
   useIntersectionObserver(infinitScrollCallback, ".observer");
-
-  // useSlider(navigation);
 
   return (
     <Layout title={`${title} - Post`}>
