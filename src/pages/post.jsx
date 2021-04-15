@@ -97,7 +97,7 @@ const Post = ({ data }) => {
   );
 };
 
-export default React.memo(Post, () => true);
+export default Post;
 
 export const query = graphql`
   query {
