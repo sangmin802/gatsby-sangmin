@@ -4,7 +4,6 @@ import scrollProps from "../utils/scrollPostProps";
 import { graphql } from "gatsby";
 import { useNavigation } from "../hook/useNavigation";
 import { useRefinedPost } from "../hook/useRefinedPost";
-import { useIntersectionObserver } from "../hook/useIntersectionObserver";
 import { usePost } from "../hook/usePost";
 import { isBrowser } from "../utils/isBrowser";
 import Layout from "../layout/layout";
@@ -69,7 +68,6 @@ const Post = ({ data }) => {
     },
     [refinedPost, setPost]
   );
-  useIntersectionObserver(infinitScrollCallback, ".observer");
 
   return (
     <Layout title={`${title} - Post`}>
@@ -93,7 +91,7 @@ const Post = ({ data }) => {
         edges={post}
         title={`${selectedC}${selectedT ? ` - ${selectedT}` : ""}`}
       />
-      <Observer />
+      <Observer callback={infinitScrollCallback} />
     </Layout>
   );
 };

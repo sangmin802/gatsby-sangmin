@@ -1,13 +1,12 @@
 import { useEffect } from "react";
-import _ from "../utils/scrollPostProps";
 import IO from "../utils/event-manager/intersectionObserver";
 
-export function useIntersectionObserver(callback, element, option = {}) {
+export function useIntersectionObserver(callback, target) {
   useEffect(() => {
-    const target = document.querySelector(element);
-    const observer = IO.connectIO(target, callback, option);
+    if (!target) return;
+    const observer = IO.connectIO(target, callback);
     return () => {
       IO.disconnectIO(observer, target);
     };
-  }, [callback, element, option]);
+  }, [callback, target]);
 }

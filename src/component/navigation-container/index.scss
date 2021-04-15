@@ -1,5 +1,6 @@
 .fixed-navigation {
   position: sticky;
+  background: #fff;
   width: 100%;
   top: 0;
   .navigation {
@@ -12,6 +13,7 @@
       padding: 4px 8px;
       font-weight: bold;
       color: #888;
+      cursor: pointer;
     }
     > nav:last-child {
       margin: 0;
