@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export function useNavigation() {
-  const [navigation, setState] = useState({ category: 0, tag: 0 });
+  const history = window.history.state;
+  const rootState = history.key ? { category: 0, tag: 0 } : { ...history };
+
+  const [navigation, setState] = useState(rootState);
   const setNavigation = useCallback(
     (nav, key) => {
       const newNavigation = { ...navigation };
@@ -16,14 +19,6 @@ export function useNavigation() {
     },
     [setState, navigation]
   );
-
-  useEffect(() => {
-    const history = window.history.state;
-    if (!history.key) {
-      setState({ ...history });
-    }
-    return;
-  }, [setState]);
 
   return { navigation, setNavigation };
 }
