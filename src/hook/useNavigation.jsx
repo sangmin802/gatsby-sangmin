@@ -15,7 +15,7 @@ export function useNavigation() {
         newNavigation.tag = nav;
       }
       setState(newNavigation);
-      // window.history.replaceState(newNavigation, "", window.location.pathname);
+      window.history.replaceState(newNavigation, "", window.location.pathname);
     },
     [setState, navigation]
   );
