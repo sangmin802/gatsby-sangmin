@@ -1,23 +1,20 @@
 .fixed-navigation {
   position: sticky;
+  width: 100%;
   top: 0;
   .navigation {
-    width: 100%;
     overflow-x: hidden;
-    .inner-navigation {
-      display: flex;
-      width: max-content;
-      transition: 0.3s;
-      > nav {
-        margin-right: 20px;
-        flex-shrink: 0;
-        padding: 4px 8px;
-        font-weight: bold;
-        color: #888;
-      }
-      > nav:last-child {
-        margin: 0;
-      }
+    transition: 0.3s;
+    white-space: nowrap;
+    > nav {
+      display: inline-block;
+      margin-right: 20px;
+      padding: 4px 8px;
+      font-weight: bold;
+      color: #888;
+    }
+    > nav:last-child {
+      margin: 0;
     }
   }
 }
