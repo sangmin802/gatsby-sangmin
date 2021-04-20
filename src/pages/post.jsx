@@ -6,6 +6,7 @@ import { useNavigation } from "../hook/useNavigation";
 import { useRefinedPost } from "../hook/useRefinedPost";
 import { usePost } from "../hook/usePost";
 import { isBrowser } from "../utils/isBrowser";
+import { throttle } from "../utils/event-manager/throttle";
 import Layout from "../layout/layout";
 import NavigationContainer from "../component/navigation-container/index";
 import ThumbnailContainer from "../component/thumbnail-container/index";
@@ -54,19 +55,21 @@ const Post = ({ data }) => {
   const { state: post, setPost } = usePost(refinedPost);
 
   // infinit scroll intersectionObserver
+  const throttleAct = useMemo(() => throttle(), []);
   const infinitScrollCallback = useCallback(
     entries => {
       entries.forEach(entry => {
         if (scrollProps.count * scrollProps.size >= refinedPost.length) return;
-        if (entry.intersectionRatio > 0) {
-          scrollProps.count++;
-          setPost(
-            refinedPost.slice(0, (scrollProps.count + 1) * scrollProps.size)
-          );
-        }
+        if (entry.intersectionRatio > 0)
+          throttleAct(() => {
+            scrollProps.count++;
+            setPost(
+              refinedPost.slice(0, (scrollProps.count + 1) * scrollProps.size)
+            );
+          });
       });
     },
-    [refinedPost, setPost]
+    [refinedPost, setPost, throttleAct]
   );
 
   return (
@@ -115,7 +118,7 @@ export const query = graphql`
           fields {
             slug
           }
-          excerpt(pruneLength: 200, truncate: true)
+          excerpt(pruneLength: 100, truncate: true)
         }
       }
     }
