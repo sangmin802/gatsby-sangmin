@@ -6,7 +6,7 @@ import { useNavigation } from "../hook/useNavigation";
 import { useRefinedPost } from "../hook/useRefinedPost";
 import { usePost } from "../hook/usePost";
 import { isBrowser } from "../utils/isBrowser";
-import { throttle } from "../utils/event-manager/throttle";
+import { useThrottle } from "../hook/useThrottle";
 import Layout from "../layout/layout";
 import NavigationContainer from "../component/navigation-container/index";
 import ThumbnailContainer from "../component/thumbnail-container/index";
@@ -55,7 +55,7 @@ const Post = ({ data }) => {
   const { state: post, setPost } = usePost(refinedPost);
 
   // infinit scroll intersectionObserver
-  const throttleAct = useMemo(() => throttle(), []);
+  const throttleAct = useThrottle(post);
   const infinitScrollCallback = useCallback(
     entries => {
       entries.forEach(entry => {

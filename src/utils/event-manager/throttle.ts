@@ -1,12 +1,10 @@
 export function throttle() {
-  let isActing = false;
-  return async function throttleAct(callback) {
-    if (!isActing) {
-      isActing = true;
-      await callback();
-      isActing = false;
-      return;
-    }
+  let boolean = false;
+  return function throttleAct(callback) {
+    if (!callback) return (boolean = false);
+    if (boolean) return;
+    boolean = true;
+    callback();
     return;
   };
 }
