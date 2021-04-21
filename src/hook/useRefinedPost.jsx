@@ -6,7 +6,7 @@ export function useRefinedPost(selectedC, selectedT, post) {
   }, [selectedC, post]);
 
   const refinedPost = useMemo(() => {
-    if (!selectedT) return refinedC;
+    if (selectedT === "All") return refinedC;
     return reducePosts(refinedC, "tag", selectedT);
   }, [selectedT, refinedC]);
 

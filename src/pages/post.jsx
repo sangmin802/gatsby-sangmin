@@ -45,12 +45,14 @@ const Post = ({ data }) => {
         )
       )
     );
+    arr.unshift("All");
     return arr;
   }, [allMDFile, category]);
   const selectedT = tags[tag];
 
   // category, tag posts
   const { refinedPost } = useRefinedPost(selectedC, selectedT, allMDFile);
+
   // visible posts
   const { state: post, setPost } = usePost(refinedPost);
 
