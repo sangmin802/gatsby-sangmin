@@ -20,8 +20,8 @@ const Post = ({ data }) => {
   const title = data.site.siteMetadata.title;
 
   // navigation reducer
-  const history = window.history.state;
-  const initialNav = history.key ? { category: 0, tag: 0 } : { ...history };
+  const key = window.history.state.key;
+  const initialNav = key ? { category: 0, tag: 0 } : { ...history };
   const NavReducer = useCallback((state, action) => {
     const newState = { ...state };
     switch (action.type) {
