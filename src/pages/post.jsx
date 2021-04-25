@@ -18,8 +18,34 @@ const Post = ({ data }) => {
 
   const allMDFile = data.allMarkdownRemark.edges;
   const title = data.site.siteMetadata.title;
-  const { navigation, setNavigation } = useNavigation();
-  const { category, tag } = navigation;
+
+  // navigation reducer
+  const history = window.history.state;
+  const initialNav = history.key ? { category: 0, tag: 0 } : { ...history };
+  const NavReducer = useCallback((state, action) => {
+    const newState = { ...state };
+    switch (action.type) {
+      case "category":
+        {
+          newState.category = action.nav;
+          newState.tag = 0;
+        }
+        break;
+      case "tag":
+        {
+          newState.tag = action.nav;
+        }
+        break;
+      default:
+        null;
+    }
+    window.history.replaceState(newState, "", window.location.pathname);
+    return newState;
+  }, []);
+  const {
+    navigation: { category, tag },
+    setNavigation,
+  } = useNavigation(NavReducer, initialNav);
 
   // categories, selected category name
   const categories = useMemo(() => {
